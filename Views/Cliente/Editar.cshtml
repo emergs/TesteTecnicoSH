@@ -1,0 +1,112 @@
+﻿@model ClienteModel
+@{
+    ViewData["title"] = "Editar Cliente";
+
+    var tipoPessoa = Model.TipoDePessoa.ToString().ToLower();
+}
+
+<div class="container p-5 w-75 d-flex flex-column justify-content-center">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <h1>Edição de Clientes</h1>
+        <a class="btn btn-outline-dark col-md-2 mx-2" asp-controller="Cliente" asp-action="Index">Voltar</a>
+    </div>
+
+    @if (TempData["MensagemErro"] != null)
+    {
+        <div class="alert alert-danger text-white" role="alert">
+            @TempData["MensagemErro"]
+        </div>
+    }
+
+    <form method="post" asp-controller="Cliente" asp-action="Editar" class="w-100">
+        <fieldset class="mb-4 d-flex flex-wrap justify-content-between">
+            <legend></legend>
+            <div class="mb-3 col-md-12">
+                <label for="nome" class="form-label">Nome/Razão Social</label>
+                <input type="text" class="form-control" asp-for="Nome" id="nome" data-bs-toggle="tooltip" data-bs-placement="top" title="Nome Completo ou Razão Social do Cliente">
+                <span class="text-danger" asp-validation-for="Nome"></span>
+            </div>
+
+            <div class="mb-3 col-md-6">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" asp-for="Email" id="email" data-bs-toggle="tooltip" data-bs-placement="top" title="E-mail do Cliente">
+                <span class="text-danger" asp-validation-for="Email"></span>
+            </div>
+
+            <div class="mb-3 col-md-5">
+                <label for="telefone" class="form-label">Telefone</label>
+                <input type="tel" class="form-control" asp-for="Telefone" id="telefone" data-bs-toggle="tooltip" data-bs-placement="top" title="Telefone do Cliente">
+                <span class="text-danger" asp-validation-for="Telefone"></span>
+            </div>
+        </fieldset>
+
+        <fieldset class="mb-4 d-flex flex-wrap justify-content-between">
+            <legend class="text-uppercase fs-5 fst-italic bg-light text-dark px-2 py-2">Informações Pessoais</legend>
+            <div class="mb-3 col-md-12">
+                <label for="tipoPessoa" class="form-label">Tipo de Pessoa</label>
+                <select id="tipoPessoa" name="TipoDePessoa" asp-for="TipoDePessoa" class="form-select" data-bs-toggle="tooltip" data-bs-placement="top" title="Selecione o tipo de pessoa">
+                    <option selected value="Fisica">Fisica</option>
+                    <option value="Juridica">Juridica</option>
+                </select>
+                <span class="text-danger" asp-validation-for="TipoDePessoa"></span>
+            </div>
+            <div class="mb-3 col-md-6">
+                <label for="cpfCnpj" class="form-label">CPF/CNPJ</label>
+                <input type="text" class="form-control" asp-for="CpfCnpj" id="cpfCnpj" data-bs-toggle="tooltip" data-bs-placement="top" title="Insira o CPF ou CNPJ do cliente">
+                <span class="text-danger" asp-validation-for="CpfCnpj"></span>
+            </div>
+            <div class="mb-3 col-md-5">
+                <label for="inscEstadual" class="form-label">Inscrição Estadual</label>
+                <input type="text" class="form-control" asp-for="InscricaoEstadual" id="inscEstadual" data-bs-toggle="tooltip" data-bs-placement="top" title="Inscrição Estadual do Cliente, selecione isento caso assim for">
+                <span class="text-danger" asp-validation-for="InscricaoEstadual"></span>
+            </div>
+            <div class="form-check col-md-12 ">
+                <input type="checkbox" class="btn-check" asp-for="Isento" name="Isento" id="isento" autocomplete="off">
+                <label class="btn btn-outline-primary" for="isento">Isento</label>
+            </div>
+        </fieldset>
+
+        <fieldset id="infoPessoaFisica" class="mb-4 d-flex flex-wrap justify-content-between">
+            <legend class="text-uppercase fs-5 fst-italic bg-light text-dark px-2 py-2">Informações de pessoa física</legend>
+            <div class="col-md-6 mb-3">
+                <label for="genero" class="form-label">Gênero</label>
+                <select id="genero" class="form-select" asp-for="Genero" data-bs-toggle="tooltip" data-bs-placement="top" title="Selecione o gênero do Cliente">
+                    <option selected value="masculino">Masculino</option>
+                    <option value="feminino">Feminino</option>
+                    <option value="outro">Outro</option>
+                </select>
+            </div>
+            <div class="col-md-5 mb-3">
+                <label for="dataNascimento" class="form-label">Data de Nascimento</label>
+                <input type="date" id="dataNascimento" asp-for="DataDeNascimento" name="DataDeNascimento" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Data de nascimento do cliente" />
+            </div>
+        </fieldset>
+
+        <fieldset class="mb-4">
+            <legend class="text-uppercase fs-5 fst-italic bg-light text-dark px-2 py-2">Situação do Cliente</legend>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" asp-for="Bloqueado" name="Bloqueado" id="bloqueado" data-bs-toggle="tooltip" data-bs-placement="top" title="Bloqueia o acesso do cliente na sua loja">
+                <label class="form-check-label" for="bloqueado">
+                    Bloqueado
+                </label>
+            </div>
+        </fieldset>
+
+        <fieldset class="mb-4 d-flex flex-wrap justify-content-between gap-2">
+            <legend class="text-uppercase fs-5 fst-italic bg-light text-dark px-2 py-2">Senha de acesso</legend>
+            <div class="mb-3 col-md">
+                <label for="senha" class="form-label">Senha</label>
+                <input type="password" class="form-control" asp-for="Senha" value="@Model.Senha" id="senha" data-bs-toggle="tooltip" data-bs-placement="top" title="Cadastre a senha de acesso do seu Cliente">
+                <span class="text-danger" asp-validation-for="Senha"></span>
+            </div>
+            <div class="mb-3 col-md">
+                <label for="confirmaSenha" class="form-label">Confirmação de Senha</label>
+                <input type="password" class="form-control" asp-for="ConfirmacaoDeSenha" value="@Model.ConfirmacaoDeSenha" id="confirmaSenha" data-bs-toggle="tooltip" data-bs-placement="top" title="Confirme a senha de acesso do seu cliente">
+                <span class="text-danger" asp-validation-for="ConfirmacaoDeSenha"></span>
+            </div>
+        </fieldset>
+
+
+        <button type="submit" class="btn btn-primary col-md-4">Salvar</button>
+    </form>
+</div>

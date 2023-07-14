@@ -1,0 +1,36 @@
+﻿@model ClienteModel
+@{
+    ViewData["title"] = "Excluir Cliente";
+}
+
+<div class="container p-5 rounded-5">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <h1>Excluir Cliente</h1>
+        <a class="btn btn-outline-danger mx-2" asp-controller="Cliente" asp-action="Index">Voltar</a>
+    </div>
+    <form method="post" asp-controller="Cliente" asp-action="Excluir">
+        <input type="hidden" asp-for="Id" />
+
+        <h2>Deseja realmente excluir este cliente?</h2>
+
+        <div class="mb-3">
+            <label for="nome" class="form-label">Nome/Razão Social</label>
+            <input type="text" class="form-control" asp-for="Nome" id="nome" data-bs-toggle="tooltip" data-bs-placement="top" title="Nome Completo ou Razão Social do Cliente" disabled>
+            <span class="text-danger" asp-validation-for="Nome"></span>
+        </div>
+
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" asp-for="Email" id="email" data-bs-toggle="tooltip" data-bs-placement="top" title="E-mail do Cliente" disabled>
+            <span class="text-danger" asp-validation-for="Email"></span>
+        </div>
+
+        <div class="mb-3">
+            <label for="telefone" class="form-label">Telefone</label>
+            <input type="tel" class="form-control" asp-for="Telefone" id="telefone" data-bs-toggle="tooltip" data-bs-placement="top" title="Telefone do Cliente" disabled>
+            <span class="text-danger" asp-validation-for="Telefone"></span>
+        </div>
+
+        <button type="submit" class="btn btn-danger">Excluir</button>
+    </form>
+</div>

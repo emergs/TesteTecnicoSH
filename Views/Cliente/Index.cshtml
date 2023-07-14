@@ -1,0 +1,103 @@
+﻿@model IEnumerable<ClienteModel>
+
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <h4 class="w-75">Consulte os seus clientes cadastrados na sua loja ou realize o cadastro de novos clientes</h4>
+        <div class="w-25 d-flex justify-content-end gap-1">
+        <a class="btn btn-success text-nowrap" asp-controller="Cliente" asp-action="Cadastrar">Adicionar Cliente</a>
+        <a id="btnFilter" class="btn btn-info">Filtrar</a>
+        </div>
+    </div>
+
+    @if(TempData["MensagemSucesso"] != null)
+    {
+        <div class="alert alert-success text-white" role="alert">
+            @TempData["MensagemSucesso"]
+        </div>
+    }
+
+    <div id="divFilter" style="display:none">
+        <form class="row my-4" id="form-filtro">
+            <div class="col-md-4">
+               <label for="nomeFiltro" class="form-label"></label>
+               <input type="text" class="form-control" id="nomeFiltro" placeholder="Nome ou Razão Social">
+            </div>
+
+            <div class="col-md-4">
+               <label for="emailFiltro" class="form-label"></label>
+               <input type="text" class="form-control" id="emailFiltro" placeholder="Email">
+            </div>
+
+
+            <div class="col-md-4">
+                <label for="telefoneFiltro" class="form-label"></label>
+                <input type="text" class="form-control" id="telefoneFiltro" placeholder="Telefone">
+            </div>
+
+            <div class="col-md-4">
+                <label for="dataFiltro" class="form-label"></label>
+                <input type="date" class="form-control" id="dataFiltro" placeholder="Telefone">
+            </div>
+
+            <div class="col-md-4">
+                <label for="bloqueadoFiltro" class="form-label"></label>
+                <select class="form-select" id="bloqueadoFiltro">
+                    <option selected value="sim">Sim</option>
+                    <option value="nao">Não</option>
+                </select>
+            </div>
+
+            <div class="col-md-4 d-flex align-items-end justify-content-between">
+                <button class="btn btn-primary" type="submit" asp-controller="Cliente" asp-action="Index">Aplicar Filtros</button>
+                <button class="btn btn-primary" type="reset">Limpar filtros</button>
+                <button id="btnCloseFilter" class="btn btn-danger" type="button">Fechar</button>
+            </div>
+        </form>
+    </div>
+
+
+    <table id="tableClient" class="table table-light table-hover">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nome/Razão Social</th>
+                <th scope="col">Email</th>
+                <th scope="col">Telefone</th>
+                <th scope="col">Data de Cadastro</th>
+                <th scope="col">Bloqueado</th>
+                <th scope="col">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @if(Model != null){
+
+                @foreach(var cliente in Model)
+                {
+                
+                    <tr>
+                        <th scope="row" class="">
+                           
+                            <input 
+                                class="form-check-input mt-2" 
+                                type="checkbox" 
+                                value="" 
+                                aria-label="Checkbox for following text input"
+                            >
+                           
+                         </th>
+                        <td class="align-middle">@cliente.Nome</td>
+                        <td class="align-middle">@cliente.Email</td>
+                        <td class="align-middle">@cliente.Telefone</td>
+                        <td class="align-middle">@cliente.DataDeCadastro</td>
+                        <td class="align-middle">@((cliente.Bloqueado == true) ? "Sim" : "Não")</td>
+                        <td>
+                            <a aps-controller="Cliente" asp-action="Editar" asp-route-id="@cliente.Id" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i></a>
+                            <a aps-controller="Cliente" asp-action="Excluir" asp-route-id="@cliente.Id" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
+                        </td>
+                    </tr>
+                }
+            }
+         </tbody>
+    </table>
+</div>
