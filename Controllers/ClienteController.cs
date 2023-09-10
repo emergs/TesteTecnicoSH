@@ -9,22 +9,22 @@ namespace TesteTecnico.Controllers
     {
         readonly private ApplicationDbContext _db;
 
-        public ClienteController(ApplicationDbContext db) 
-        {
-            _db = db;
-        }
+        public ClienteController(ApplicationDbContext db) => _db = db;
 
+        //busca os clientes salvos na base de dados
         public IActionResult Index()
         {
             IEnumerable<ClienteModel> cliente = _db.Cliente;
             return View(cliente);
         }
 
+        // retorna a view da página de cadastro
         public IActionResult Cadastrar()
         {
             return View();
         }
 
+        //retorna a view da página de edição do cliente
         [HttpGet]
         public IActionResult Editar(int? id)
         {
@@ -43,6 +43,7 @@ namespace TesteTecnico.Controllers
             return View(cliente);
         }
 
+        //retorna a view da página de exclusão do cliente
         [HttpGet]
         public IActionResult Excluir(int? id)
         {
@@ -82,6 +83,7 @@ namespace TesteTecnico.Controllers
             return View();
         }
 
+        //realiza o cadastro do cliente
         [HttpPost]
         public IActionResult Cadastrar(ClienteModel cliente)
         {
