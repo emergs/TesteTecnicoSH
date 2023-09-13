@@ -37,9 +37,9 @@ namespace TesteTecnico.Models
         [StringLength(150, ErrorMessage = "O campo Nome deve ter no máximo 150 caracteres.")]
         public string Nome { get; set; }
 
+        [EmailAddress(ErrorMessage = "Informe um endereço de email válido.")]
         [Required(ErrorMessage= "Campo Obrigatório")]
         [StringLength(150, ErrorMessage = "O campo Email deve ter no máximo 150 caracteres.")]
-        [EmailAddress(ErrorMessage = "Informe um endereço de email válido.")]
         public string Email { get; set; }
 
         [Required(ErrorMessage= "Campo Obrigatório")]
